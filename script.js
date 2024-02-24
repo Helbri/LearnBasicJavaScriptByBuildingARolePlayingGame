@@ -7,4 +7,8 @@ let fighting;
 let monsterHealth;
 //déclaration d'un tableau avec plusieurs valeurs -> let variable = [ "un", "deux", "trois" ];
 let inventory = ["stick"];
-// step 15
+//const est le mot d'une bonne pratique pour signifier que la valeur de cette variable ne changera pas.
+const button1 = document.querySelector("#button1");
+const button2 = document.querySelector("#button2");
+const button3 = document.querySelector("#button3");
+// step 22
