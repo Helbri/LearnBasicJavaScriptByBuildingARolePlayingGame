@@ -1,0 +1,47 @@
+body{
+    background-color: #0a0a23;
+}
+
+#game{
+    max-width: 500px;
+    max-height: 400px;
+    margin: 30px auto 0px auto;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+.stat{
+    padding-right:10px
+}
+
+#controls,#stats{
+    color:#0a0a23;
+    padding:5px;
+    border:1px solid #0a0a23;
+}
+
+button{
+    cursor: pointer;
+    color:#0a0a23;
+    /*background-color employé si le background-image devait ne pas être affiché.*/
+    background-color:#feac32;
+    background-image: linear-gradient(#fecc4c, #ffac33);
+    border: 3px solid #feac32;
+}
+
+#monsterStats{
+    border: 1px solid #0a0a23;
+    padding:5px;
+    display: none;
+    background-color:#c70d0d;
+    color: #ffffff;
+}
+
+#text{
+    padding: 10px;
+    background-color: #0a0a23;
+    color: #ffffff;
+}
+
+/* step 33 */
