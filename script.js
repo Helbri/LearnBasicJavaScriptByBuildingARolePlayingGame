@@ -55,29 +55,39 @@ button3.onclick = fightDragon;
 
 function update(location){
 
-}
-
-function goTown() {
-    button1.innerText = "Go to store";
-    button2.innerText = "Go to cave";
-    button3.innerText = "Fight dragon";
-    button1.onclick = goStore;
-    button2.onclick = goCave;
-    button3.onclick = fightDragon;
+    //Elements propres à "Town Square"
+    //innerText permet de changer, ici, le texte, de l'élément qui est sélectionné.
+    // le texte des boutons est pris dans le tableau "button text"
+    // la fonction des boutons est pris dans le tableau "button functions"
+    button1.innerText = location["button text"][0];
+    button2.innerText = location["button text"][1];
+    button3.innerText = location["button text"][2];
+    button1.onclick = location["button functions"][0];
+    button2.onclick = location["button functions"][1];
+    button3.onclick = location["button functions"][2];
     // \" le backslash permet d'échapper les guillemets et d'autres symboles spéciaux
+    
+    //Elements propres au "Store"
     text.innerText = "You are in the town square. You see a sign that says \"Store\".";
-}
-
-function goStore() {
-//innerText permet de changer, ici, le texte, de l'élément qui est sélectionné.
+    
     button1.innerText = "Buy 10 health (10 gold)";
     button2.innerText = "Buy weapon (30 gold)";
     button3.innerText = "Go to town square";
-    text.innerText = "You enter the store."
     button1.onclick = buyHealth;
     button2.onclick = buyWeapon;
     button3.onclick = goTown;
+    text.innerText = "You enter the store.";
 }
+
+function goTown() {
+    //appel de la fonction "update"
+    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //Le premier objet [0] est appelé.
+    update(locations[0]);
+    }
+
+function goStore() {
+    }
 
 function goCave() {
     console.log("Going to cave.");
@@ -91,4 +101,4 @@ function buyHealth (){};
 
 function buyWeapon (){};
 
-// step 58
+// step 66
