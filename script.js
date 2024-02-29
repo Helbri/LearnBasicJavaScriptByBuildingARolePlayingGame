@@ -7,8 +7,8 @@ let gold = 50;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
-//déclaration d'une variable avec un tableau avec plusieurs valeurs -> let variable = [ "un", "deux", "trois" ];
-//déclaration d'une variable avec un tableau à une valeur.
+//déclaration d'une variable avec un tableau avec plusieurs éléments -> let variable = [ "un", "deux", "trois" ];
+//déclaration d'une variable avec un tableau à un seul élément.
 let inventory = ["stick"];
 
 //déclaration de variables "button"
@@ -27,11 +27,35 @@ const monsterName = document.querySelector("#monsterName");
 const text = document.querySelector("#text");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+//contient un tableau avec un objet présenté entre accolades = [{}]
+//un objet est présenté entre accolade
+//une chaîne de texte est présenté entre guillemets
+const locations = [
+    //valeurs de la fonction "goStore"
+    {
+        name: "town square",
+        "button text": ["Go to store","Go to cave","Fight dragon"],
+        "button functions": [goStore, goCave, fightDragon],
+        text: "You are in the town square. You see a sign that says \"Store\"."
+    },
+    //valeurs de la fonction "goTown"
+    {
+        name: "store",
+        "button text": ["Buy 10 health (10 gold)","Buy weapon (30 gold)","Go to town square"],
+        "button functions": [buyHealth, buyWeapon, goTown],
+        text: "You enter the store."
+    }
+];
+
 //création de fonctions
 //initialisation des boutons
 button1.onclick = goStore;
 button2.onclick = goCave;
 button3.onclick = fightDragon;
+
+function update(location){
+
+}
 
 function goTown() {
     button1.innerText = "Go to store";
@@ -67,4 +91,4 @@ function buyHealth (){};
 
 function buyWeapon (){};
 
-// step 49
+// step 58
