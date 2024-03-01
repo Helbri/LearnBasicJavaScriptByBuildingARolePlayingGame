@@ -66,10 +66,9 @@ function update(location){
     button2.onclick = location["button functions"][1];
     button3.onclick = location["button functions"][2];
     // \" le backslash permet d'échapper les guillemets et d'autres symboles spéciaux
-    
-    //Elements propres au "Store"
     text.innerText = "You are in the town square. You see a sign that says \"Store\".";
     
+    //Elements propres au "Store"
     button1.innerText = "Buy 10 health (10 gold)";
     button2.innerText = "Buy weapon (30 gold)";
     button3.innerText = "Go to town square";
