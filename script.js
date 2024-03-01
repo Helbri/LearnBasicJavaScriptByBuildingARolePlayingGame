@@ -31,19 +31,26 @@ const monsterHealthText = document.querySelector("#monsterHealth");
 //un objet est présenté entre accolade
 //une chaîne de texte est présenté entre guillemets
 const locations = [
-    //valeurs de la fonction "goStore"
+    //valeurs de la fonction "goStore", premier objet
     {
         name: "town square",
         "button text": ["Go to store","Go to cave","Fight dragon"],
         "button functions": [goStore, goCave, fightDragon],
         text: "You are in the town square. You see a sign that says \"Store\"."
     },
-    //valeurs de la fonction "goTown"
+    //valeurs de la fonction "goTown", second objet
     {
         name: "store",
         "button text": ["Buy 10 health (10 gold)","Buy weapon (30 gold)","Go to town square"],
         "button functions": [buyHealth, buyWeapon, goTown],
         text: "You enter the store."
+    },
+    //valeurs de la fonction "goCave", troisième objet
+    {
+        name: "cave",
+        "button text":["Fight slime","Fight fanged beast","Go to town square"],
+        "button functions":[fightSlime, fightBeast, goTown],
+        text:"You enter the cave. You see some monsters."
     }
 ];
 
@@ -65,8 +72,8 @@ function update(location){
     button1.onclick = location["button functions"][0];
     button2.onclick = location["button functions"][1];
     button3.onclick = location["button functions"][2];
-    // \" le backslash permet d'échapper les guillemets et d'autres symboles spéciaux
-    text.innerText = "You are in the town square. You see a sign that says \"Store\".";
+    // utilisation de la notation point pour la récupération du texte
+    text.innerText = location.text;
     
     //Elements propres au "Store"
     button1.innerText = "Buy 10 health (10 gold)";
@@ -85,19 +92,36 @@ function goTown() {
     update(locations[0]);
     }
 
-function goStore() {
+    function goStore() {
+    //appel de la fonction "update"
+    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //L'objet [1] est appelé.
+    update(locations[1]);
     }
 
 function goCave() {
-    console.log("Going to cave.");
+    //appel de la fonction "update"
+    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //L'objet [2] est appelé.
+    update(locations[2]);
 }
 
 function fightDragon (){
     console.log("Fighting dragon.");
 }
 
-function buyHealth (){};
+function buyHealth (){
+    //code de l'action du joueur incrémentation et décrémentation
+    //incrémentation avec syntaxe déployée entièrement x= x +10
+    //incrémentation avec syntaxe contractée x+= 10
+
+    gold -= 10;
+    health += 10;
+};
 
 function buyWeapon (){};
 
-// step 66
+function fightSlime (){};
+
+function fightBeast (){};
+// step 74
