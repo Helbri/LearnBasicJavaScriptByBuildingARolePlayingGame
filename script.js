@@ -26,6 +26,24 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const text = document.querySelector("#text");
 const monsterHealthText = document.querySelector("#monsterHealth");
+const weapons = [
+    {
+    name: "stick",
+    power: "5"
+    },
+    {
+    name: "dagger",
+    power: "30"
+    },
+    {
+    name: "claw hammer",
+    power: "50"
+    },
+    {
+    name: "sword",
+    power: "100"
+    }
+];
 
 //contient un tableau avec un objet présenté entre accolades = [{}]
 //un objet est présenté entre accolade
@@ -111,17 +129,34 @@ function fightDragon (){
 }
 
 function buyHealth (){
-    //code de l'action du joueur incrémentation et décrémentation
-    //incrémentation avec syntaxe déployée entièrement x= x +10
-    //incrémentation avec syntaxe contractée x+= 10
-
-    gold -= 10;
-    health += 10;
+    //condition if pour déterminer si l'action est possible
+    if(gold >= 10) 
+    {
+        //code de l'action du joueur incrémentation et décrémentation
+        //incrémentation avec syntaxe déployée entièrement x= x +10
+        //incrémentation avec syntaxe contractée x+= 10
+        gold -= 10;
+        health += 10;
+        //affichage des valeurs de gold et health sur l'écran de jeu
+        goldText.innerText = gold;
+        healthText.innerText = health;
+    };
+    // else pour informer le joueur qu'il ne remplit pas les conditions requises pour l'action
+    else
+    {
+        text.innerText = "You do not have enough gold to buy health."
+    }
 };
+
+function buyWeapon() {
+    if (gold >= 30);{
+        gold -= 30;
+    }
+}
 
 function buyWeapon (){};
 
 function fightSlime (){};
 
 function fightBeast (){};
-// step 74
+// step 82
