@@ -149,14 +149,19 @@ function buyHealth (){
 };
 
 function buyWeapon() {
-    if (gold >= 30);{
+    if (gold >= 30) {
         gold -= 30;
+        //incrémente le numéro correspondant à l'élement arme de 1
+        currentWeapon++;
+        goldText.innerText = gold;
+        //récupère le nom de l'élément arme dans le tableau weapons
+        let newWeapon = weapons[currentWeapon].name;
+        //introduit le nom de l'arme dans la phrase
+        text.innerText = "You now have a "+ newWeapon +".";
     }
 }
-
-function buyWeapon (){};
 
 function fightSlime (){};
 
 function fightBeast (){};
-// step 82
+// step 88
