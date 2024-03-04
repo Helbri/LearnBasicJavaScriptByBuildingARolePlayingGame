@@ -29,19 +29,19 @@ const monsterHealthText = document.querySelector("#monsterHealth");
 const weapons = [
     {
     name: "stick",
-    power: "5"
+    power: 5
     },
     {
     name: "dagger",
-    power: "30"
+    power: 30
     },
     {
     name: "claw hammer",
-    power: "50"
+    power: 50
     },
     {
     name: "sword",
-    power: "100"
+    power: 100
     }
 ];
 
@@ -52,21 +52,21 @@ const locations = [
     //valeurs de la fonction "goStore", premier objet
     {
         name: "town square",
-        "button text": ["Go to store","Go to cave","Fight dragon"],
+        "button text": ["Go to store", "Go to cave", "Fight dragon"],
         "button functions": [goStore, goCave, fightDragon],
         text: "You are in the town square. You see a sign that says \"Store\"."
     },
     //valeurs de la fonction "goTown", second objet
     {
         name: "store",
-        "button text": ["Buy 10 health (10 gold)","Buy weapon (30 gold)","Go to town square"],
+        "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
         "button functions": [buyHealth, buyWeapon, goTown],
         text: "You enter the store."
     },
     //valeurs de la fonction "goCave", troisième objet
     {
         name: "cave",
-        "button text":["Fight slime","Fight fanged beast","Go to town square"],
+        "button text":["Fight slime", "Fight fanged beast", "Go to town square"],
         "button functions":[fightSlime, fightBeast, goTown],
         text:"You enter the cave. You see some monsters."
     }
@@ -81,7 +81,7 @@ button3.onclick = fightDragon;
 function update(location){
 
     //Elements propres à "Town Square"
-    //innerText permet de changer, ici, le texte, de l'élément qui est sélectionné.
+    //innerText est une propriété permet de changer, ici, le texte, de l'élément qui est sélectionné.
     // le texte des boutons est pris dans le tableau "button text"
     // la fonction des boutons est pris dans le tableau "button functions"
     button1.innerText = location["button text"][0];
@@ -134,7 +134,8 @@ function buyHealth (){
     {
         //code de l'action du joueur incrémentation et décrémentation
         //incrémentation avec syntaxe déployée entièrement x= x +10
-        //incrémentation avec syntaxe contractée x+= 10
+        //incrémentation avec syntaxe contractée x += 10 (affectation après addition). Peut fonctionner aussi avec une addition de chaines de caractères
+        //décrémentation avec syntaxe contractée x -= 10 (affectation après soustraction)
         gold -= 10;
         health += 10;
         //affichage des valeurs de gold et health sur l'écran de jeu
@@ -144,24 +145,29 @@ function buyHealth (){
     // else pour informer le joueur qu'il ne remplit pas les conditions requises pour l'action
     else
     {
-        text.innerText = "You do not have enough gold to buy health."
+        text.innerText = "You do not have enough gold to buy health.";
     }
-};
+}
 
 function buyWeapon() {
     if (gold >= 30) {
         gold -= 30;
-        //incrémente le numéro correspondant à l'élement arme de 1
+        //incrémente le numéro correspondant à l'élément arme de 1
         currentWeapon++;
         goldText.innerText = gold;
         //récupère le nom de l'élément arme dans le tableau weapons
         let newWeapon = weapons[currentWeapon].name;
-        //introduit le nom de l'arme dans la phrase
-        text.innerText = "You now have a "+ newWeapon +".";
+        //introduit le nom de l'arme dans la phrase grâce à la variable newWeapon
+        text.innerText = "You now have a " + newWeapon + ".";
+        //permet d'ajouter un autre élément représenté par la variable "newWeapon" dans le tableau "inventory"
+        inventory.push(newWeapon);
+        //le += permet d'assigner du texte au précédent text.innerText après addition au lieu de l'écraser.
+        //permet d'afficher le contenu du tableau "inventory avec sa concaténation à la chaîne de texte"
+        text.innerText += " In your inventory you have: " + inventory;
     }
 }
 
-function fightSlime (){};
+function fightSlime () {};
 
-function fightBeast (){};
-// step 88
+function fightBeast () {};
+// step 92
