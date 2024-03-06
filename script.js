@@ -150,24 +150,31 @@ function buyHealth (){
 }
 
 function buyWeapon() {
-    if (gold >= 30) {
-        gold -= 30;
-        //incrémente le numéro correspondant à l'élément arme de 1
-        currentWeapon++;
-        goldText.innerText = gold;
-        //récupère le nom de l'élément arme dans le tableau weapons
-        let newWeapon = weapons[currentWeapon].name;
-        //introduit le nom de l'arme dans la phrase grâce à la variable newWeapon
-        text.innerText = "You now have a " + newWeapon + ".";
-        //permet d'ajouter un autre élément représenté par la variable "newWeapon" dans le tableau "inventory"
-        inventory.push(newWeapon);
-        //le += permet d'assigner du texte au précédent text.innerText après addition au lieu de l'écraser.
-        //permet d'afficher le contenu du tableau "inventory avec sa concaténation à la chaîne de texte"
-        text.innerText += " In your inventory you have: " + inventory;
+    //vérification que le nombre d'armes acquises par le joueur est inférieur à 3
+    if (currentWeapon < 3) {
+        if (gold >= 30) {
+            gold -= 30;
+            //incrémente le numéro correspondant à l'élément arme de 1
+            currentWeapon++;
+            goldText.innerText = gold;
+            //récupère le nom de l'élément arme dans le tableau weapons
+            let newWeapon = weapons[currentWeapon].name;
+            //introduit le nom de l'arme dans la phrase grâce à la variable newWeapon
+            text.innerText = "You now have a " + newWeapon + ".";
+            //permet d'ajouter un autre élément représenté par la variable "newWeapon" dans le tableau "inventory"
+            inventory.push(newWeapon);
+            //le += permet d'assigner du texte au précédent text.innerText après addition au lieu de l'écraser.
+            //permet d'afficher le contenu du tableau "inventory avec sa concaténation à la chaîne de texte"
+            text.innerText += " In your inventory you have: " + inventory;
+        } 
+        // si la quantité d'or possédée est insuffisante
+        else {
+            text.innerText = "You do not have enough gold to buy a weapon.";
+        }
     }
 }
 
 function fightSlime () {};
 
 function fightBeast () {};
-// step 92
+// step 94
