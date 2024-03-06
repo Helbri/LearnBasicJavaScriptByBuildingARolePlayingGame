@@ -150,8 +150,8 @@ function buyHealth (){
 }
 
 function buyWeapon() {
-    //vérification que le nombre d'armes acquises par le joueur est inférieur à 3
-    if (currentWeapon < 3) {
+    //vérification que le nombre d'armes acquises par le joueur est inférieur au nombre maximum d'armes dans le tableau weapons
+    if (currentWeapon < weapons.length) {
         if (gold >= 30) {
             gold -= 30;
             //incrémente le numéro correspondant à l'élément arme de 1
@@ -172,9 +172,27 @@ function buyWeapon() {
             text.innerText = "You do not have enough gold to buy a weapon.";
         }
     }
+    // si la quantité d'armes possédée est déjà maximale
+    else {
+    text.innerText = "You already have the most powerful weapon!";
+    //donne la possibilité de vendre les armes acquises
+    button2.innerText = "Sell weapon for 15 gold";
+    button2.onclick = sellWeapon
+        }
+}
+
+function sellWeapon() {
+    if (inventory.length > 1) {
+        if(gold=15){
+        //incrémentation de 15 à l'or lors de la revente d'une arme
+        goldText.innerText = gold += 15
+        //création de la variable currentWeapon dans ce bloc de fonction
+        let currentWeapon
+        }
+    }
 }
 
 function fightSlime () {};
 
 function fightBeast () {};
-// step 94
+// step 103
