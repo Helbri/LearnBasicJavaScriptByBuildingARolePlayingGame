@@ -45,6 +45,23 @@ const weapons = [
     }
 ];
 
+//tableau monsters
+const monsters = [{
+    name:"slime",
+    level:2,
+    health:15
+},
+{
+    name:"fanged beast",
+    level:8,
+    health:60
+},
+{
+    name:"dragon",
+    level:20,
+    health:300
+}];
+
 //contient un tableau avec un objet présenté entre accolades = [{}]
 //un objet est présenté entre accolade
 //une chaîne de texte est présenté entre guillemets
@@ -128,6 +145,9 @@ function fightDragon (){
     console.log("Fighting dragon.");
 }
 
+//fonction pour gérer la logique de combat qui est commune à tous les montres
+function goFight() {};
+
 function buyHealth (){
     //condition if pour déterminer si l'action est possible
     if(gold >= 10) 
@@ -186,8 +206,15 @@ function sellWeapon() {
         if(gold=15){
         //incrémentation de 15 à l'or lors de la revente d'une arme
         goldText.innerText = gold += 15
-        //création de la variable currentWeapon dans ce bloc de fonction
-        let currentWeapon
+        // Retire et récupère le premier élément du tableau d'inventaire, correspondant à l'arme vendue.
+        let currentWeapon = inventory.shift();
+        //indique l'arme vendue
+        text.innerText = "You sold a " + currentWeapon + ".";
+        }
+        else {
+            //en cas d'une seule arme, aucune action
+            (inventory.length=1)
+            text.innerText = "Don't sell your only weapon!"
         }
     }
 }
@@ -195,4 +222,4 @@ function sellWeapon() {
 function fightSlime () {};
 
 function fightBeast () {};
-// step 103
+// step 108
