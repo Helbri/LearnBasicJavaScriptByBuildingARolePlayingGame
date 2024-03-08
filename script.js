@@ -86,6 +86,13 @@ const locations = [
         "button text":["Fight slime", "Fight fanged beast", "Go to town square"],
         "button functions":[fightSlime, fightBeast, goTown],
         text:"You enter the cave. You see some monsters."
+    },
+    //valeurs de la fonction "fighting", quatrième objet
+    {
+        name:"fight",
+        "button text":["Attack","Dodge","Run"],
+        "button functions":[attack, dodge, goTown],
+        text:"You are fighting a monster."
     }
 ];
 
@@ -123,30 +130,23 @@ function update(location){
 function goTown() {
     //appel de la fonction "update"
     //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
-    //Le premier objet [0] est appelé.
+    //Le premier objet [0] du tableau location est appelé.
     update(locations[0]);
-    }
+}
 
     function goStore() {
     //appel de la fonction "update"
     //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
-    //L'objet [1] est appelé.
+    //L'objet [1] du tableau location est appelé.
     update(locations[1]);
-    }
+}
 
 function goCave() {
     //appel de la fonction "update"
     //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
-    //L'objet [2] est appelé.
+    //L'objet [2] du tableau location est appelé.
     update(locations[2]);
 }
-
-function fightDragon (){
-    console.log("Fighting dragon.");
-}
-
-//fonction pour gérer la logique de combat qui est commune à tous les montres
-function goFight() {};
 
 function buyHealth (){
     //condition if pour déterminer si l'action est possible
@@ -219,7 +219,32 @@ function sellWeapon() {
     }
 }
 
-function fightSlime () {};
+function fightSlime() {
+    //utilisation de la variable. Si elle a la valeur 0
+    (fighting = 0)
+    //appel de la fonction goFight
+    goFight()
+}
 
-function fightBeast () {};
-// step 108
+function fightBeast() {
+(fighting = 1)
+    goFight();
+}
+
+function fightDragon() {
+(fighting = 2)
+    goFight();
+}
+
+//fonction pour gérer la logique de combat qui est commune à tous les montres
+function goFight() {
+    //L'objet [3] du tableau location est appelé.
+    update(locations[3]);
+    //la variable monsterHealth reçoit la valeur de santé du monstre (fighting prends la valeur du monstre affronté)
+    monsterHealth=monsters[fighting].health;
+}
+
+function attack () {};
+
+function dodge () {};
+// step 114
