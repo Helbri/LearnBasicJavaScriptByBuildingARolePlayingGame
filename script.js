@@ -129,21 +129,21 @@ function update(location){
 
 function goTown() {
     //appel de la fonction "update"
-    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //argument de la fonction est mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
     //Le premier objet [0] du tableau location est appelé.
     update(locations[0]);
 }
 
     function goStore() {
     //appel de la fonction "update"
-    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //argument de la fonction est mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
     //L'objet [1] du tableau location est appelé.
     update(locations[1]);
 }
 
 function goCave() {
     //appel de la fonction "update"
-    //argument de la fonction mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
+    //argument de la fonction est mis entre parenthèses, il s'agit du nom du tableau défini plus haut.
     //L'objet [2] du tableau location est appelé.
     update(locations[2]);
 }
@@ -242,9 +242,22 @@ function goFight() {
     update(locations[3]);
     //la variable monsterHealth reçoit la valeur de santé du monstre (fighting prends la valeur du monstre affronté)
     monsterHealth=monsters[fighting].health;
+    //la constante monsterStats est créée dans la fonction goFight, et a pour assignation l'id monsterStats du fichier index
+    const monsterStats = document.querySelector('#monsterStats');
+    //le style de monsterStats mis par défaut sur display none dans la feuille de style est réglé ici sur block
+    monsterStats.style.display = 'block'
+    //le nom du monstre combattu est assigné à la variable monsterName
+    monsterName.innerText = monsters[fighting].name;
+    //la santé du monstre en cours est assignée à la constante monsterHealthText variable
+    monsterHealthText.innerText = monsterHealth;
 }
 
-function attack () {};
+function attack () {
+    //on assigne au text la valeur de la phrase avec le nom du monstre en cours en le cherchant dans le tableau
+    text.innerText = "The " + monsters[fighting].name +" attacks.";
+    //on ajoute après la précédente chaîne une nouvelle qui contient le nom de l'arme utilisée
+    text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
+};
 
 function dodge () {};
-// step 114
+// step 118
