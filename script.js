@@ -93,6 +93,14 @@ const locations = [
         "button text":["Attack","Dodge","Run"],
         "button functions":[attack, dodge, goTown],
         text:"You are fighting a monster."
+    },
+    //valeurs de la fonction "fighting", quatrième objet
+    {
+        name:"kill monster",
+        "button text":["Go to town square","Go to town square","Go to town square"],
+        "button functions":[goTown, goTown, goTown],
+        //pour mettre le texte Arg: entre guillemets, il est nécessaire d'enrober le reste du texte entre apostrophes.
+        text:'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
     }
 ];
 
@@ -103,6 +111,9 @@ button2.onclick = goCave;
 button3.onclick = fightDragon;
 
 function update(location){
+
+    //style associé au monsterStats pour son affichage pour que l'id monsterStats ne soit pas affiché.
+    monsterStats.style.display = "none";
 
     //Elements propres à "Town Square"
     //innerText est une propriété permet de changer, ici, le texte, de l'élément qui est sélectionné.
@@ -253,11 +264,50 @@ function goFight() {
 }
 
 function attack () {
+    
     //on assigne au text la valeur de la phrase avec le nom du monstre en cours en le cherchant dans le tableau
-    text.innerText = "The " + monsters[fighting].name +" attacks.";
+    text.innerText = "The "+ monsters[fighting].name +" attacks.";
     //on ajoute après la précédente chaîne une nouvelle qui contient le nom de l'arme utilisée
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
+    //la santé est égale a la santé moins le niveau du monstre
+    health-=monsters[fighting].level;
+    //la santé du monstre prend la valeur de: 
+    //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
+    //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
+    //ce nombre est multiplié par l'exp
+    //le nombre multiplié par l'exp est ramené à son entier le plus proche, donnant ainsi des entiers entre 0 et le nombre d'exp possible
+    //pour que la valeur enlevée à monsterHealth ne soit pas nulle, on rajoute 1
+    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    //le texte healthText affiche ce qui est dans la variable health
+    healthText.innerText = health;
+    //le texte monsterHealthText affiche ce qui est dans la variable monsterHealth
+    monsterHealthText.innerText = monsterHealth;
+    //on vérifie si la santé est inférieure ou égale à 0, dans quel cas, on appelle la fonction lose indiquant la défaite du joueur
+    if(health<=0){
+        lose();
+    }
+    //on vérifie si la santé du monstre est inférieure ou égale à 0, dans quel cas, on appelle la fonction defeatMonster indiquant la défaite du monstre
+    else if (monsterHealth <= 0){
+        defeatMonster()
+    };
 };
 
-function dodge () {};
-// step 118
+function dodge (){
+    //le texte indique que l'on esquive l'attaque du monstre avec le nom du monstre combattu.
+    text.innerText = "You dodge the attack from the "  + monsters[fighting].name ;
+};
+
+function defeatMonster(){
+    //on ajoute à l'or la valeur du niveau du monstre combattu multiplié par 6.7 que l'on arrondi à son entier le plus proche
+    gold+= Math.floor(monsters[fighting].level * 6.7);
+    // on attribue à l'exp sa valeur plus le niveau du monstre vaincu
+    xp += monsters[fighting].level;
+    //on attribue respectivement à goldText et xpText les valeurs obtenues pour gold et xp 
+    goldText.innerText = gold;
+    xpText.innerText = xp;
+    //met à jour avec les données de l'index[4]
+    update(locations[4]);
+};
+
+function lose(){};
+// step 133
