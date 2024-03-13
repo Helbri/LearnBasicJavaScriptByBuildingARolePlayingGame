@@ -89,18 +89,33 @@ const locations = [
     },
     //valeurs de la fonction "fighting", quatrième objet
     {
-        name:"fight",
+        name: "fight",
         "button text":["Attack","Dodge","Run"],
         "button functions":[attack, dodge, goTown],
         text:"You are fighting a monster."
     },
-    //valeurs de la fonction "fighting", quatrième objet
+    //valeurs de la fonction "kill monster", cinquième objet
     {
-        name:"kill monster",
+        name: "kill monster",
         "button text":["Go to town square","Go to town square","Go to town square"],
         "button functions":[goTown, goTown, goTown],
         //pour mettre le texte Arg: entre guillemets, il est nécessaire d'enrober le reste du texte entre apostrophes.
         text:'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
+    },
+    //valeurs de la fonction "lose", sixième objet
+    {
+        name: "lose",
+        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+        "button functions": [restart, restart, restart],
+        //le code du &#x2620 est destiné a être mis à jour pour afficher correctement le texte d'émoticône
+        text: "You die. &#x2620;"
+    },
+    //valeurs de la fonction "win", septième objet
+    {
+        name: "win",
+        "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
+        "button functions": [restart, restart, restart],
+        text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;"
     }
 ];
 
@@ -117,16 +132,17 @@ function update(location){
 
     //Elements propres à "Town Square"
     //innerText est une propriété permet de changer, ici, le texte, de l'élément qui est sélectionné.
+    //changement de innerText en innerHTML. innerHTML récupère ou définit la syntaxe HTML décrivant les descendants de l'élément.
     // le texte des boutons est pris dans le tableau "button text"
     // la fonction des boutons est pris dans le tableau "button functions"
-    button1.innerText = location["button text"][0];
-    button2.innerText = location["button text"][1];
-    button3.innerText = location["button text"][2];
+    button1.innerHTML = location["button text"][0];
+    button2.innerHTML = location["button text"][1];
+    button3.innerHTML = location["button text"][2];
     button1.onclick = location["button functions"][0];
     button2.onclick = location["button functions"][1];
     button3.onclick = location["button functions"][2];
     // utilisation de la notation point pour la récupération du texte
-    text.innerText = location.text;
+    text.innerHTML = location.text;
     
     //Elements propres au "Store"
     button1.innerText = "Buy 10 health (10 gold)";
@@ -172,7 +188,7 @@ function buyHealth (){
         //affichage des valeurs de gold et health sur l'écran de jeu
         goldText.innerText = gold;
         healthText.innerText = health;
-    };
+    }
     // else pour informer le joueur qu'il ne remplit pas les conditions requises pour l'action
     else
     {
@@ -287,9 +303,16 @@ function attack () {
         lose();
     }
     //on vérifie si la santé du monstre est inférieure ou égale à 0, dans quel cas, on appelle la fonction defeatMonster indiquant la défaite du monstre
-    else if (monsterHealth <= 0){
-        defeatMonster()
-    };
+    else if (monsterHealth <= 0) {
+        defeatMonster();{
+            if(fighting === 2){
+                winGame()
+            }
+            else{
+                defeatMonster()
+            }
+        }
+    }
 };
 
 function dodge (){
@@ -305,9 +328,30 @@ function defeatMonster(){
     //on attribue respectivement à goldText et xpText les valeurs obtenues pour gold et xp 
     goldText.innerText = gold;
     xpText.innerText = xp;
-    //met à jour avec les données de l'index[4]
+    //appelle la fonction update et met à jour avec les données de l'index[4] du tableau locations
     update(locations[4]);
 };
 
-function lose(){};
-// step 133
+function lose(){
+    //appelle la fonction update et met à jour avec les données de l'index[5] du tableau locations
+    update(locations[5]);
+};
+
+function winGame (){
+    //appelle la fonction update et met à jour avec les données de l'index[6] du tableau locations
+    update (locations[6])
+}
+
+function restart(){
+    //on assigne les données de démarrage aux différentes variables
+    xp=0;
+    health=100;
+    gold=50;
+    currentWeapon=0;
+    inventory=["stick"];
+    goldText.innerText = gold;
+    healthText.innerText = health;
+    xpText.innerText = xp;
+    goTown()
+    };
+// step 140
