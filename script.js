@@ -285,8 +285,8 @@ function attack () {
     text.innerText = "The "+ monsters[fighting].name +" attacks.";
     //on ajoute après la précédente chaîne une nouvelle qui contient le nom de l'arme utilisée
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
-    //la santé est égale a la santé moins le niveau du monstre
-    health-=monsters[fighting].level;
+    //la santé est égale à la santé moins la valeur de la fonction getMonsterAttackValue et transmet le niveau du monstre comme argument
+    health -= getMonsterAttackValue(monsters[fighting].level);
     //la santé du monstre prend la valeur de: 
     //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
     //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
@@ -313,6 +313,16 @@ function attack () {
             }
         }
     }
+};
+
+//fonction getMonsterAttackValue avec "level" mis en paramètre
+function getMonsterAttackValue (level) {
+    //définit l'attaque du monstre à cinq fois son niveau moins un nombre aléatoire compris entre 0 et l'xp du joueur
+    const hit = (level * 5) - (Math.floor(Math.random() * xp));
+    //enregistrement de la valeur hit sur la console pour l'utiliser lors du débogage.
+    console.log(hit);
+    //renvoie la valeur de hit
+    return hit;
 };
 
 function dodge (){
@@ -354,4 +364,4 @@ function restart(){
     xpText.innerText = xp;
     goTown()
     };
-// step 140
+// step 145
