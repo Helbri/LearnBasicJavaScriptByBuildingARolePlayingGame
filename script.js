@@ -280,20 +280,25 @@ function goFight() {
 }
 
 function attack () {
-    
     //on assigne au text la valeur de la phrase avec le nom du monstre en cours en le cherchant dans le tableau
     text.innerText = "The "+ monsters[fighting].name +" attacks.";
     //on ajoute après la précédente chaîne une nouvelle qui contient le nom de l'arme utilisée
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
     //la santé est égale à la santé moins la valeur de la fonction getMonsterAttackValue et transmet le niveau du monstre comme argument
     health -= getMonsterAttackValue(monsters[fighting].level);
-    //la santé du monstre prend la valeur de: 
-    //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
-    //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
-    //ce nombre est multiplié par l'exp
-    //le nombre multiplié par l'exp est ramené à son entier le plus proche, donnant ainsi des entiers entre 0 et le nombre d'exp possible
-    //pour que la valeur enlevée à monsterHealth ne soit pas nulle, on rajoute 1
-    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    //déclaration if prenant comme condition l'appel de la fonction isMonsterHit
+    if(isMonsterHit()){
+        //la santé du monstre prend la valeur de: 
+        //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
+        //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
+        //ce nombre est multiplié par l'exp
+        //le nombre multiplié par l'exp est ramené à son entier le plus proche, donnant ainsi des entiers entre 0 et le nombre d'exp possible
+        //pour que la valeur enlevée à monsterHealth ne soit pas nulle, on rajoute 1
+        monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;}
+    else {
+        //autrement le texte " You miss." est ajouté au text.innerText est ajouté
+        text.innerText += " You miss."
+    }
     //le texte healthText affiche ce qui est dans la variable health
     healthText.innerText = health;
     //le texte monsterHealthText affiche ce qui est dans la variable monsterHealth
@@ -309,11 +314,13 @@ function attack () {
                 winGame()
             }
             else{
-                defeatMonster()
+                defeatMonster();
             }
         }
+    
     }
-};
+    
+}
 
 //fonction getMonsterAttackValue avec "level" mis en paramètre
 function getMonsterAttackValue (level) {
@@ -321,9 +328,16 @@ function getMonsterAttackValue (level) {
     const hit = (level * 5) - (Math.floor(Math.random() * xp));
     //enregistrement de la valeur hit sur la console pour l'utiliser lors du débogage.
     console.log(hit);
-    //renvoie la valeur de hit
-    return hit;
+    //opérateur ternaire qui renvoie la valeur de hit seulement si elle est supérieure à 0
+    return hit > 0 ? hit : 0
 };
+
+//Cette fonction va retourner une valeur booléenne qui sera a utiliser dans l'instruction if de la fonction attack
+//Elle retourne une comparaison sur ce que le chiffre aléatoire entre 0 inclu et 1 exclu puisse être supérieur à 0.2
+//ou si la santé du joueur est inférieure à 20.
+function isMonsterHit (){
+    return Math.random()>.2 || health < 20;
+}
 
 function dodge (){
     //le texte indique que l'on esquive l'attaque du monstre avec le nom du monstre combattu.
@@ -364,4 +378,4 @@ function restart(){
     xpText.innerText = xp;
     goTown()
     };
-// step 145
+// step 151
