@@ -116,6 +116,14 @@ const locations = [
         "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
         "button functions": [restart, restart, restart],
         text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;"
+    },
+
+    //valeurs de la fonction "easter egg", huitième objet
+    {
+        name:"easter egg",
+        "button text": ["2","8", "Go to town square?"],
+        "button functions": [pickTwo, pickEight, goTown],
+        text:"You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!",
     }
 ];
 
@@ -280,20 +288,25 @@ function goFight() {
 }
 
 function attack () {
-    
     //on assigne au text la valeur de la phrase avec le nom du monstre en cours en le cherchant dans le tableau
     text.innerText = "The "+ monsters[fighting].name +" attacks.";
     //on ajoute après la précédente chaîne une nouvelle qui contient le nom de l'arme utilisée
     text.innerText += " You attack it with your " + weapons[currentWeapon].name + ".";
-    //la santé est égale a la santé moins le niveau du monstre
-    health-=monsters[fighting].level;
-    //la santé du monstre prend la valeur de: 
-    //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
-    //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
-    //ce nombre est multiplié par l'exp
-    //le nombre multiplié par l'exp est ramené à son entier le plus proche, donnant ainsi des entiers entre 0 et le nombre d'exp possible
-    //pour que la valeur enlevée à monsterHealth ne soit pas nulle, on rajoute 1
-    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    //la santé est égale à la santé moins la valeur de la fonction getMonsterAttackValue et transmet le niveau du monstre comme argument
+    health -= getMonsterAttackValue(monsters[fighting].level);
+    //déclaration if prenant comme condition l'appel de la fonction isMonsterHit
+    if(isMonsterHit()){
+        //la santé du monstre prend la valeur de: 
+        //sa santé moins le dégât de l'arme à laquelle on a rajouté un nombre aléatoire entier compris entre 1 et l'exp 
+        //Math.random donne un chiffre entre 0 et 0 avec un nombre infini de 9
+        //ce nombre est multiplié par l'exp
+        //le nombre multiplié par l'exp est ramené à son entier inférieur le plus proche, donnant ainsi des entiers entre 0 et le nombre d'exp possible
+        //pour que la valeur enlevée à monsterHealth ne soit pas nulle, on rajoute 1
+        monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;}
+    else {
+        //autrement le texte " You miss." est ajouté au text.innerText est ajouté
+        text.innerText += " You miss."
+    }
     //le texte healthText affiche ce qui est dans la variable health
     healthText.innerText = health;
     //le texte monsterHealthText affiche ce qui est dans la variable monsterHealth
@@ -309,11 +322,38 @@ function attack () {
                 winGame()
             }
             else{
-                defeatMonster()
+                defeatMonster();
             }
         }
+    
     }
+    //sur chaque attaque,il y a un risque l'arme du joueur casse.
+    //la condition de if est si le résultat de Math.random est inférieur ou égale à 0.1
+    //et si la longueur de l'inventaire est différente de 1
+    //la méthode pop permet d'effacer dans l'inventaire la dernière arme utilisée et de l'afficher
+    if (Math.random() <= .1 && inventory.length !== 1) {
+        text.innerText += " Your "+inventory.pop()+" breaks.";
+        //la valeur de currentWeapon est décrémentée
+        currentWeapon--;
+    }
+}
+
+//fonction getMonsterAttackValue avec "level" mis en paramètre
+function getMonsterAttackValue (level) {
+    //définit l'attaque du monstre à cinq fois son niveau moins un nombre aléatoire compris entre 0 et l'xp du joueur
+    const hit = (level * 5) - (Math.floor(Math.random() * xp));
+    //enregistrement de la valeur hit sur la console pour l'utiliser lors du débogage.
+    console.log(hit);
+    //opérateur ternaire qui renvoie la valeur de hit seulement si elle est supérieure à 0
+    return hit > 0 ? hit : 0
 };
+
+//Cette fonction va retourner une valeur booléenne qui sera a utiliser dans l'instruction if de la fonction attack
+//Elle retourne une comparaison sur ce que le chiffre aléatoire entre 0 inclu et 1 exclu puisse être supérieur à 0.2
+//ou si la santé du joueur est inférieure à 20.
+function isMonsterHit (){
+    return Math.random()>.2 || health < 20;
+}
 
 function dodge (){
     //le texte indique que l'on esquive l'attaque du monstre avec le nom du monstre combattu.
@@ -321,7 +361,7 @@ function dodge (){
 };
 
 function defeatMonster(){
-    //on ajoute à l'or la valeur du niveau du monstre combattu multiplié par 6.7 que l'on arrondi à son entier le plus proche
+    //on ajoute à l'or la valeur du niveau du monstre combattu multiplié par 6.7 que l'on arrondi à son entier inférieur le plus proche
     gold+= Math.floor(monsters[fighting].level * 6.7);
     // on attribue à l'exp sa valeur plus le niveau du monstre vaincu
     xp += monsters[fighting].level;
@@ -354,4 +394,54 @@ function restart(){
     xpText.innerText = xp;
     goTown()
     };
-// step 140
+
+//fonction pour un élément caché
+function easterEgg() {
+    update(locations[7]);
+}
+
+
+//les fonctions pick, pickTwo et pickEight sont utiles pour l'objet easter Egg
+//création de la fonction pick
+//elle sera appelée dans plusieurs fonctions (pickTwo, pickEight)
+function pick(guess) {
+    //initialisation de la constante numbers avec création d'un tableau vide
+    const numbers=[];
+    //une boucle while est créée, elle tournera tant que les conditions seront respectées
+    while (numbers.length <10) {
+        //on ajoute un nombre dans le tableau "numbers" avec la méthode push
+        numbers.push (Math.floor(Math.random()*11))
+    }
+    //on affiche un text pour afficher le nombre compris dans le tableau
+    // le caractère d'échappement \n permettra de faire apparaître la prochaine partie de texte insérée sur une autre ligne
+    text.innerText = "You picked "+ guess +". Here are the random numbers:\n"
+
+    //boucle for donné en exemple par le site. Syntaxe: for (a; b; c). a->initialisation de l'expression, b->condition, c->expression finale
+    //ici on rajoute le chiffre sorti à la chaîne de texte précédente ainsi qu'un saut de ligne
+    for (let i = 0; i < 10; i++) {
+        text.innerText += numbers[i] + "\n";
+    }
+
+    //la méthode includes est utilisée. Elle détermine si le tableau contient un élément et va retourner soit vrai soit faux.
+    if (numbers.includes(guess)) {
+        //du texte est ajouté au précédent
+        text.innerText += "Right! You win 20 gold!"
+        //20 unités d'or sont ajouté à la variable gold
+        gold += 20;
+        //goldText.innerText est mis à jour
+        goldText.innerText = gold
+    }
+
+};
+
+//la fonction pick a été appelée dans les fonctions pickTwo et pickEight. Le 2 et le 8 ont été passé en arguments de pick en fonction du nom de la fonction pick
+function pickTwo(){
+    pick(2)
+};
+
+function pickEight(){
+    pick(8)
+};
+
+
+// step 172
