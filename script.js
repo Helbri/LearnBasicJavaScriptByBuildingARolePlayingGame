@@ -98,7 +98,7 @@ const locations = [
     {
         name: "kill monster",
         "button text":["Go to town square","Go to town square","Go to town square"],
-        "button functions":[goTown, goTown, goTown],
+        "button functions":[goTown, goTown, easterEgg],
         //pour mettre le texte Arg: entre guillemets, il est nécessaire d'enrober le reste du texte entre apostrophes.
         text:'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
     },
@@ -431,7 +431,17 @@ function pick(guess) {
         //goldText.innerText est mis à jour
         goldText.innerText = gold
     }
-
+    else {
+        //du texte est ajouté au précédent
+        text.innerText += "Wrong! You lose 10 health!";
+        //10 unités de santé sont enlevées à la variable health
+        health -= 10;
+        //healthText.innerText est mis à jour
+        healthText.innerText = health;
+        //si la vie du joueur est inférieure ou égale à 0, le joueur a perdu. La fonction lose est appelée
+        if(health<=0){
+            lose()
+    }
 };
 
 //la fonction pick a été appelée dans les fonctions pickTwo et pickEight. Le 2 et le 8 ont été passé en arguments de pick en fonction du nom de la fonction pick
@@ -444,4 +454,4 @@ function pickEight(){
 };
 
 
-// step 172
+// step 174
